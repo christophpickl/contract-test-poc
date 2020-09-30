@@ -1,2 +1,41 @@
 # contract-test-poc
-how a dream contract-test setup could look like
+
+How a possible contract test setup could look like.
+
+## Tech stack
+
+* Kotlin
+* Ktor - Web server
+* Kodein - Dependency injection
+* Jackson - JSON serialization
+* WireMock - Fake HTTP server
+* TestNG - Test framework
+* AssertK - Matcher library
+
+## Architecture
+
+* Modules:
+    * `test-lib`: mainly WireMock API wrapper
+    * `service-provider`: provides products
+        * `service-impl`: the actual Ktor server
+        * `contract-dto`: transfer objects
+        * `contract-client`: reusable HTTP requests
+        * `contract-mock`: reusable test definition, using test-lib
+    * `service-consumer`: consumes/filters products and returns bestsellers
+        * `service-impl`: the actual Ktor server , using service-provider's client
+        * `contract-client`: reusable HTTP requests, used by own contract tests
+        * `contract-dto`: transfer objects
+        * ... could also have mock ...
+* ContractTest for `service-consumer`:
+    1. Starting up local WireMock server
+    1. Using `service-provider`'s stub definition
+    1. Request own endpoint (using Ktor's test application engine)
+    1. Compare with `contract-dto` definition
+    1. Verify WireMock stub
+
+## Possible doings
+
+* Mock failing responses
+* More complex HTTP requests
+* Generate contract classes by a custom OpenAPI generator
+* Database access
