@@ -8,14 +8,3 @@ dependencies {
     implementation(project(":service-provider:contract-dto"))
     implementation(project(":test-lib"))
 }
-
-tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = Versions.jvm
-        }
-    }
-    withType<Test> {
-        useTestNG {}
-    }
-}

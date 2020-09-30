@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     id("com.github.ben-manes.versions")
@@ -22,6 +20,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:${Versions.logback}")
 
     testImplementation(project(":service-provider:contract-mock"))
+    testImplementation(project(":test-lib"))
     testImplementation("com.github.tomakehurst:wiremock-standalone:${Versions.wiremock}")
     testImplementation("org.testng:testng:${Versions.testng}")
     testImplementation(ktor("-server-test-host")) {
@@ -29,15 +28,4 @@ dependencies {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-test-junit")
     }
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:${Versions.assertk}")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = Versions.jvm
-        }
-    }
-    withType<Test> {
-        useTestNG {}
-    }
 }

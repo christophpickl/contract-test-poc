@@ -33,3 +33,24 @@ allprojects {
         }
     }
 }
+
+subprojects {
+    // apply(plugin = "org.jetbrains.kotlin.jvm")
+
+//    dependencies {
+//        "api"(kotlin("stdlib-jdk8"))
+//        "api"(kotlin("reflect"))
+//        "api"("io.github.microutils:kotlin-logging:${Versions.klogging}")
+//    }
+
+    tasks {
+        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = Versions.jvm
+            }
+        }
+        withType<Test> {
+            useTestNG {}
+        }
+    }
+}
