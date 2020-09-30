@@ -26,9 +26,9 @@ How a possible contract test setup could look like.
         * `contract-client`: reusable HTTP requests, used by own contract tests
         * `contract-dto`: transfer objects
         * ... could also have mock ...
-* ContractTest for `service-consumer`:
+* [ContractTest.kt](https://github.com/christophpickl/contract-test-poc/blob/master/service-consumer/server-impl/src/test/kotlin/cpickl/contracttest/serviceconsumer/serverimpl/ContractTest.kt) for `service-consumer`:
     1. Starting up local WireMock server
-    1. Using `service-provider`'s stub definition
+    1. Using `service-provider`'s stub definition, [provider_mock.kt](https://github.com/christophpickl/contract-test-poc/blob/master/service-provider/contract-mock/src/main/kotlin/cpickl/contracttest/serviceprovider/contractmock/provider_mock.kt)
     1. Request own endpoint (using Ktor's test application engine)
     1. Compare with `contract-dto` definition
     1. Verify WireMock stub
@@ -39,3 +39,4 @@ How a possible contract test setup could look like.
 * More complex HTTP requests
 * Generate contract classes by a custom OpenAPI generator
 * Database access
+* Startup a real Ktor application engine, and run tests for contract-client

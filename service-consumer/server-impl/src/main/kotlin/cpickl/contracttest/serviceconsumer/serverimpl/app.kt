@@ -34,9 +34,6 @@ fun buildKodein(konfig: Konfig) = Kodein {
     bind<BestSellerService>() with singleton { BestSellerServiceImpl(instance()) }
 }
 
-//fun appModule(konfig: Konfig) = Kodein.Module(name = "App Module") {
-//}
-
 
 // configure basics for Ktor
 fun Application.main(kodein: Kodein) {
@@ -49,5 +46,6 @@ fun Application.main(kodein: Kodein) {
 }
 
 data class Konfig(
+        // defaults to production URLs (could add reading from sys-vars/env)
         val serviceProviderBaseUrl: String = "http://localhost:8081"
 )
