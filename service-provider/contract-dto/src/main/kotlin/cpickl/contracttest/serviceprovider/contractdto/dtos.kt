@@ -14,4 +14,12 @@ data class ProductResponseDto(
 data class ProductDto(
         val id: Int,
         val name: String
-)
+) {
+    companion object {
+        // could be part of test-artifact instead
+        fun any() = ProductDto(
+                id = 0,
+                name = ""
+        )
+    }
+}

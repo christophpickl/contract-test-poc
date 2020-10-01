@@ -13,7 +13,7 @@ import org.kodein.di.generic.instance
 fun Routing.installRouting(kodein: Kodein) {
     val controller by kodein.instance<BestSellerService>()
 
-    get("/bestseller") {
+    get("/bestsellers") {
         call.respond(BestSellerResponseDto(controller.loadBestSeller().map { it.toBestSellerDto() }))
     }
 }

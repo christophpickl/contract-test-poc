@@ -20,15 +20,16 @@ import org.testng.annotations.Test
 @Listeners(WireMockListener::class)
 class ContractTest {
 
-    private val anyId = 42
-    private val bestsellerProductName = "Affen"
+
+    private val bestsellerProductName = "a is at the beginning for bestsellers"
+    private val nonBestsellerProductName = "does not begin with a, not a bestseller"
 
     fun `Given service-provider returns bestseller When get bestseller Then return it`() = withMockedProvider {
         `given service-provider get-products returns success ✅`(ProductResponseDto(listOf(
-                ProductDto(anyId, bestsellerProductName)
+                ProductDto.any().copy(name = bestsellerProductName)
         )))
 
-        with(handleRequest(Get, "/bestseller")) {
+        with(handleRequest(Get, "/bestsellers")) {
 
             assertThat(response).isStatusCode(OK)
             assertThat(response).isJsonContentType()
@@ -40,10 +41,25 @@ class ContractTest {
         `verify service-provider get-products`()
     }
 
+    fun `Given service-provider returns nonbestseller When get bestseller Then return empty`() = withMockedProvider {
+        `given service-provider get-products returns success ✅`(ProductResponseDto(listOf(
+                ProductDto.any().copy(name = nonBestsellerProductName)
+        )))
+
+        with(handleRequest(Get, "/bestsellers")) {
+
+            assertThat(response).isStatusCode(OK)
+            assertThat(response).isJsonContentType()
+            assertThat(jackson.read<BestSellerResponseDto>(response))
+                    .isEqualTo(BestSellerResponseDto.empty)
+        }
+        `verify service-provider get-products`()
+    }
+
     fun `Given service-provider returns empty When get bestseller Then return empty`() = withMockedProvider {
         `given service-provider get-products returns success ✅`(ProductResponseDto.empty)
 
-        with(handleRequest(Get, "/bestseller")) {
+        with(handleRequest(Get, "/bestsellers")) {
 
             assertThat(response).isStatusCode(OK)
             assertThat(response).isJsonContentType()
